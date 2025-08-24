@@ -16,7 +16,7 @@ for fl in os.listdir(__path__[0]):
 
 # import all of our modules so they can register item types and hooks
 #__all__ = ['equipped', 'wielded', 'gear_config', 'gear_config_olc', 'gear_olc']
-__all__ = []
+__all__ = ['combat']
 
 for module in __all__:
     importlib.import_module('.' + module, package=__name__)

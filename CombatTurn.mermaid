@@ -1,0 +1,44 @@
+flowchart TD
+  A[Start of Turn] --> B[Choose target and weapon]
+  B --> C[Check range or cover and advantage or disadvantage]
+  C --> D[Roll d20 for attack, apply advantage or disadvantage]
+  D --> E{Natural 1?}
+  E -- Yes --> M[Miss] --> Z[End of Turn]
+  E -- No --> F{Natural 20?}
+  F -- Yes --> Kcrit[Automatic Hit Critical]
+  F -- No --> H[Compute Attack Total]
+
+  subgraph Attack_Modifiers [Attack Modifiers]
+    H1[Base d20 result]
+    H2[Add Ability modifier, Strength or Dexterity]
+    H3[Add Proficiency if proficient]
+    H4[Add Equipment attack modifiers, such as magic weapon or scope]
+    H5[Add Other situational modifiers]
+  end
+
+  H --> H1 --> H2 --> H3 --> H4 --> H5 --> I[Attack Total]
+  I --> J{Attack Total greater or equal to target AC?}
+  J -- No --> M
+  J -- Yes --> Khit[Hit]
+
+  %% Damage path
+  Khit --> L1[Determine weapon damage dice]
+  L1 --> P[Roll damage dice once]
+
+  Kcrit --> L2[Determine weapon damage dice]
+  L2 --> O[Roll damage dice twice]
+
+  %% Merge to modifiers
+  P --> Q
+  O --> Q
+
+  subgraph Damage_Modifiers [Damage Modifiers]
+    Q1[Add Ability modifier to damage, usually Strength or Dexterity]
+    Q2[Add Equipment damage modifiers, such as magic weapon bonus]
+    Q3[Add Other situational modifiers]
+  end
+
+  Q[Sum rolled damage] --> Q1 --> Q2 --> Q3 --> R[Damage Total]
+  R --> S[Apply resistances or vulnerabilities]
+  S --> T[Reduce target HP]
+  T --> Z[End of Turn]

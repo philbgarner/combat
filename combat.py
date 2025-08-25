@@ -195,7 +195,7 @@ def attack(source, target):
         targetUid = source.getvar("atkTargetUid")
         if (targetUid != target.uid):
             targetUid = target.uid
-            source.setvar("atkTargetUid")
+            source.setvar("atkTargetUid", target.uid)
 
     result = combat_turn(source, target)
 

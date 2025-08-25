@@ -199,17 +199,17 @@ def attack(source, target):
 
     result = combat_turn(source, target)
 
-    if result.success:
+    if result['success']:
         # TODO: some kind of trigger where other entities get notified of a successful attack
         source.send("You attack %s." % (target.name))
 
-        if result.critical_hit:
+        if result['critical_hit']:
             # TODO: some kind of trigger where other entities get notified if it was a crit
-            source.send("It was a critical hit! You dealt %d damage." % (result.total))
+            source.send("It was a critical hit! You dealt %d damage." % (result['total']))
         else:
-            source.send("You dealt %d damage." % (result.total))
+            source.send("You dealt %d damage." % (result['total']))
 
-        if (result.killed):
+        if (result['killed']):
             source.setvar("atkTargetUid") # clear target uid
             # TODO: some kind of trigger where other entities get notified of a death in the room.
             source.send("You killed %s!" % (target.name))

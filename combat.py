@@ -148,15 +148,15 @@ def combat_turn(source, target):
     
     # roll hit check
     hit_roll = attack_roll(attack_modifiers, target_ac)
-
+    
     # roll damage
-    damage = damage_roll(weapon_attack_term, hit_roll.critical_hit)
+    damage = damage_roll(weapon_attack_term, hit_roll['critical_hit'])
 
     return {
-        "success": hit_roll.hit,
-        "critical_hit": hit_roll.critical_hit,
-        "killed": target_hp - damage.total <= 0,
-        "damage": damage.total
+        "success": hit_roll['hit'],
+        "critical_hit": hit_roll['critical_hit'],
+        "killed": target_hp - damage['total'] <= 0,
+        "damage": damage['total']
     }
 
 def cmd_attack(ch, cmd, arg):

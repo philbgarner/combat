@@ -159,6 +159,18 @@ def combat_turn(source, target):
         "damage": damage.total
     }
 
+def cmd_attack(ch, cmd, arg):
+    """
+    Begin attacking a creature.
+    """
+    targetName = mud.parse_args(ch, True, cmd, "", "string")
+    target = list(ch.room.chars.filter(lambda f: f.uid != ch.uid and (targetName in f.name or targetName in f.keywords), ch.room.chars))
+    if len(target) > 0:
+        print("target name %s" % target[0])
+        attack(ch, target[0])
+    else:
+        ch.send("Target %s not found." % targetName)
+
 def delay_attack(ch, filler, cmd):
     targetName = mud.parse_args(ch, True, cmd, "", "string")
     target = list(ch.room.chars.filter(lambda f: f.uid != ch.uid and f.name == targetName, ch.room.chars))
@@ -207,3 +219,9 @@ def attack(source, target):
 
     if source.getvar("atkTargetUid"):
         event.start_event(source, DEFAULT_COOLDOWN, delay_attack, None, target.name)
+
+################################################################################
+# add our commands
+################################################################################
+
+mudsys.add_cmd("attack",    None, cmd_attack,   "player", False)

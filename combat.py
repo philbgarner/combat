@@ -163,12 +163,15 @@ def cmd_attack(ch, cmd, arg):
     """
     Begin attacking a creature.
     """
-    targetName = mud.parse_args(ch, True, cmd, arg, "string(target)")
-    target = list(filter(lambda f: f.uid != ch.uid and (targetName[0] in f.name or targetName[0] in f.keywords), ch.room.chars))
-    if len(target) > 0:
-        attack(ch, target[0])
+    if not ch.hasvar('atkTargetUid'):
+        targetName = mud.parse_args(ch, True, cmd, arg, "string(target)")
+        target = list(filter(lambda f: f.uid != ch.uid and (targetName[0] in f.name or targetName[0] in f.keywords), ch.room.chars))
+        if len(target) > 0:
+            attack(ch, target[0])
+        else:
+            ch.send("Target %s not found." % targetName)
     else:
-        ch.send("Target %s not found." % targetName)
+        ch.send("You're already attacking a creature!")
 
 def delay_attack(ch, filler, cmd):
     targetName = mud.parse_args(ch, True, "attack %s" % cmd, cmd, "string(target)")

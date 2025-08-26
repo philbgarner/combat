@@ -208,7 +208,7 @@ def attack(source, target):
             source.send("You dealt %d damage." % (result['damage']))
 
         if (result['killed']):
-            source.setvar("atkTargetUid") # clear target uid
+            source.deletevar("atkTargetUid") # clear target uid
             # TODO: some kind of trigger where other entities get notified of a death in the room.
             source.send("You killed %s!" % (target.name))
     else:

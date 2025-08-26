@@ -166,16 +166,14 @@ def cmd_attack(ch, cmd, arg):
     targetName = mud.parse_args(ch, True, cmd, arg, "string(target)")
     target = list(filter(lambda f: f.uid != ch.uid and (targetName[0] in f.name or targetName[0] in f.keywords), ch.room.chars))
     if len(target) > 0:
-        print("target name %s" % target[0])
         attack(ch, target[0])
     else:
         ch.send("Target %s not found." % targetName)
 
 def delay_attack(ch, filler, cmd):
-    targetName = mud.parse_args(ch, True, cmd, "", "string(target)")
+    targetName = mud.parse_args(ch, True, "attack %s" % cmd, cmd, "string(target)")
     target = list(filter(lambda f: f.uid != ch.uid and f.name == targetName[0], ch.room.chars))
     if len(target) > 0:
-        print("target name %s" % target[0])
         attack(ch, target[0])
 
 def attack(source, target):

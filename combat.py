@@ -203,9 +203,9 @@ def attack(source, target):
 
         if result['critical_hit']:
             # TODO: some kind of trigger where other entities get notified if it was a crit
-            source.send("It was a critical hit! You dealt %d damage." % (result['total']))
+            source.send("It was a critical hit! You dealt %d damage." % (result['damage']))
         else:
-            source.send("You dealt %d damage." % (result['total']))
+            source.send("You dealt %d damage." % (result['damage']))
 
         if (result['killed']):
             source.setvar("atkTargetUid") # clear target uid
